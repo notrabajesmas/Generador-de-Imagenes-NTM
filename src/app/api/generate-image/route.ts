@@ -20,12 +20,25 @@ async function fetchImage(url: string, timeoutMs = 55000): Promise<{ success: bo
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   
+  // Get API key from environment
+  const apiKey = process.env.POLLINATIONS_API_KEY;
+  
   try {
-    console.log(`[API] Fetching: ${url.substring(0, 120)}...`);
+    console.log(`[API] Fetching: ${url.substring(0, 100)}...`);
+    
+    const headers: Record<string, string> = {
+      'Accept': 'image/*',
+    };
+    
+    // Add API key if available (for unlimited access)
+    if (apiKey) {
+      headers['Authorization'] = `Bearer ${apiKey}`;
+      console.log('[API] Using API key for unlimited access');
+    }
     
     const response = await fetch(url, {
       method: 'GET',
-      headers: { 'Accept': 'image/*' },
+      headers,
       signal: controller.signal,
     });
     
@@ -33,7 +46,7 @@ async function fetchImage(url: string, timeoutMs = 55000): Promise<{ success: bo
     
     if (!response.ok) {
       const errorText = await response.text().catch(() => '');
-      console.log(`[API] HTTP ${response.status}: ${errorText.substring(0, 200)}`);
+      console.log(`[API] HTTP ${response.status}: ${errorText.substring(0, 300)}`);
       return { success: false, error: `HTTP ${response.status}` };
     }
     
@@ -93,18 +106,13 @@ export async function POST(request: Request) {
     const encodedPrompt = encodeURIComponent(cleanPrompt);
     const seed = Math.floor(Math.random() * 999999999);
 
-    // Pollinations.ai - 100% FREE, no API key, no limits
-    // Multiple models to try (in order of preference)
+    // Pollinations.ai models to try
     const endpoints = [
-      // Flux - Fast and reliable (PRIMARY)
+      // Flux - Fast and high quality
       { name: 'Flux', url: `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&model=flux&nologo=true` },
-      // Flux with enhancement
-      { name: 'Flux Enhanced', url: `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&model=flux&nologo=true&enhance=true` },
-      // Flux Dev (slower but higher quality)
+      // Flux Dev - Higher quality
       { name: 'Flux Dev', url: `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&model=flux-dev&nologo=true` },
-      // Flux 2 Dev
-      { name: 'Flux 2 Dev', url: `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&model=flux-2-dev&nologo=true` },
-      // Default model (backup)
+      // Default
       { name: 'Default', url: `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&nologo=true` },
     ];
 

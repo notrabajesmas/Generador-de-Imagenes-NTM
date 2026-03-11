@@ -16,44 +16,76 @@ Una aplicación web de generación de imágenes con IA, **100% gratuita**, sin r
 
 - **Frontend**: Next.js 15, React 19, Tailwind CSS, shadcn/ui
 - **Backend**: API Routes de Next.js
-- **Generación de imágenes**: [Pollinations.ai](https://pollinations.ai) - API gratuita y de código abierto
+- **Generación de imágenes**: [Pollinations.ai](https://pollinations.ai) con modelo Flux
 
 ## 💰 Costo
 
 **¡Es 100% GRATIS!**
 
-- Sin API keys
-- Sin registro
-- Sin límites de uso
+- Sin registro requerido para usuarios
+- Sin límites de uso (con API key)
 - Sin tarjeta de crédito
 
-Pollinations.ai es un servicio de código abierto que permite generar imágenes de forma gratuita.
+## 🔑 Configuración de API Key
+
+### ¿Por qué necesito una API key?
+
+Sin API key, Pollinations limita a 1 solicitud por IP. Para una app pública, necesitas una API key para acceso ilimitado.
+
+### Cómo obtener una API key gratuita:
+
+1. Ve a [pollinations.ai](https://pollinations.ai)
+2. Regístrate gratuitamente
+3. Obtén tu API key
+
+### Configuración local:
+
+1. Crea un archivo `.env.local` en la raíz del proyecto:
+```
+POLLINATIONS_API_KEY=tu_api_key_aqui
+```
 
 ## 🌐 Despliegue en Vercel
 
-### Opción 1: Desde GitHub
-
-1. Sube este proyecto a un repositorio de GitHub
-2. Ve a [vercel.com](https://vercel.com)
-3. Haz clic en "New Project"
-4. Importa tu repositorio
-5. Haz clic en "Deploy"
-
-### Opción 2: Desde CLI
+### Paso 1: Subir a GitHub
 
 ```bash
-# Instalar Vercel CLI
-npm i -g vercel
-
-# Desplegar
-vercel
+git init
+git add .
+git commit -m "Generador de Imágenes NTM"
+git branch -M main
+git remote add origin https://github.com/TU-USUARIO/generador-imagenes-ntm.git
+git push -u origin main
 ```
+
+### Paso 2: Configurar en Vercel
+
+1. Ve a [vercel.com](https://vercel.com)
+2. Haz clic en "New Project"
+3. Importa tu repositorio
+4. **Importante**: Agrega la variable de entorno:
+   - Nombre: `POLLINATIONS_API_KEY`
+   - Valor: `tu_api_key_de_pollinations`
+5. Haz clic en "Deploy"
+
+### Configurar variable de entorno en Vercel:
+
+1. Ve a tu proyecto en Vercel
+2. Settings → Environment Variables
+3. Agrega:
+   - Key: `POLLINATIONS_API_KEY`
+   - Value: `sk_tu_api_key`
+4. Redeploy para aplicar cambios
 
 ## 🛠️ Desarrollo Local
 
 ```bash
 # Instalar dependencias
 bun install
+
+# Configurar API key
+cp .env.example .env.local
+# Edita .env.local con tu API key
 
 # Iniciar servidor de desarrollo
 bun run dev
@@ -63,8 +95,8 @@ bun run dev
 
 ## 📝 Notas
 
-- La generación de imágenes puede tardar entre 5-30 segundos dependiendo de la complejidad
-- Pollinations.ai usa modelos de Stable Diffusion
+- La generación de imágenes puede tardar entre 5-30 segundos
+- Se usa el modelo Flux de alta calidad
 - El historial se guarda localmente en el navegador (localStorage)
 
 ## 📄 Licencia
