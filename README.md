@@ -1,50 +1,51 @@
-# 🎨 Generador de Imágenes NTM
+# Generador de Imágenes NTM
 
-Una aplicación web moderna para generar imágenes con inteligencia artificial de forma ilimitada y gratuita.
-
-![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=flat-square&logo=tailwind-css)
+Una aplicación web de generación de imágenes con IA, **100% gratuita**, sin registro y sin límites.
 
 ## ✨ Características
 
-- 🖼️ **Generación Ilimitada** - Sin límites, sin registro requerido
-- 🎨 **12 Estilos Artísticos** - Anime, realista, óleo, acuarela, 3D, cyberpunk y más
-- ⚡ **5 Niveles de Calidad** - Desde HD hasta 8K Master
-- 📐 **7 Tamaños de Imagen** - Cuadrado, vertical, panorámico, etc.
-- 🔢 **Múltiples Imágenes** - Genera hasta 4 imágenes a la vez
-- 📱 **Compartir en Redes** - Twitter, Facebook, Instagram, WhatsApp
-- 💾 **Historial Local** - Guarda hasta 30 imágenes en el navegador
-- ⬇️ **Descarga Fácil** - Descarga individual o todas juntas
+- 🎨 **12 estilos artísticos**: Realista, Anime, Arte Digital, Pintura al Óleo, Acuarela, 3D Render, Cyberpunk, Fantasía, Minimalista, Pixel Art, Boceto
+- 📺 **5 niveles de calidad**: Estándar, HD, 2K, 4K Ultra HD, 8K Master
+- 📐 **7 tamaños de imagen**: Cuadrado, Vertical, Retrato, Paisaje, Apaisado, Panorámico, Móvil
+- 🔢 **Múltiples imágenes**: Genera de 1 a 4 imágenes a la vez
+- 📱 **Compartir en redes**: Twitter, Facebook, Instagram, WhatsApp
+- 💾 **Historial local**: Guarda tus últimas 30 imágenes generadas
+- 📥 **Descarga directa**: Descarga tus imágenes en formato PNG
 
-## 🚀 Despliegue en Vercel
+## 🚀 Tecnología
 
-### Opción 1: Desde GitHub (Recomendado)
+- **Frontend**: Next.js 15, React 19, Tailwind CSS, shadcn/ui
+- **Backend**: API Routes de Next.js
+- **Generación de imágenes**: [Pollinations.ai](https://pollinations.ai) - API gratuita y de código abierto
 
-1. **Sube a GitHub:**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit - Generador de Imágenes NTM"
-   git branch -M main
-   git remote add origin https://github.com/TU_USUARIO/generador-imagenes-ntm.git
-   git push -u origin main
-   ```
+## 💰 Costo
 
-2. **Conecta con Vercel:**
-   - Ve a [vercel.com](https://vercel.com)
-   - Click en "Add New Project"
-   - Importa tu repositorio de GitHub
-   - Click en "Deploy"
-   - ¡Listo! 🎉
+**¡Es 100% GRATIS!**
 
-### Opción 2: Vercel CLI (Sin GitHub)
+- Sin API keys
+- Sin registro
+- Sin límites de uso
+- Sin tarjeta de crédito
+
+Pollinations.ai es un servicio de código abierto que permite generar imágenes de forma gratuita.
+
+## 🌐 Despliegue en Vercel
+
+### Opción 1: Desde GitHub
+
+1. Sube este proyecto a un repositorio de GitHub
+2. Ve a [vercel.com](https://vercel.com)
+3. Haz clic en "New Project"
+4. Importa tu repositorio
+5. Haz clic en "Deploy"
+
+### Opción 2: Desde CLI
 
 ```bash
-# Instala Vercel CLI
+# Instalar Vercel CLI
 npm i -g vercel
 
-# Despliega directamente
+# Desplegar
 vercel
 ```
 
@@ -60,60 +61,12 @@ bun run dev
 # Abrir http://localhost:3000
 ```
 
-## 📁 Estructura del Proyecto
+## 📝 Notas
 
-```
-src/
-├── app/
-│   ├── api/
-│   │   ├── generate-image/route.ts  # API de generación
-│   │   └── health/route.ts          # Health check
-│   ├── page.tsx                      # Página principal
-│   ├── layout.tsx                    # Layout
-│   └── globals.css                   # Estilos globales
-├── components/ui/                    # Componentes shadcn/ui
-└── lib/                              # Utilidades
-```
-
-## 🎯 Estilos Disponibles
-
-| Estilo | Descripción |
-|--------|-------------|
-| 📸 Realista | Fotografía profesional ultra detallada |
-| 🎌 Anime/Manga | Estilo japonés con colores vibrantes |
-| 🎨 Arte Digital | Concept art estilo ArtStation |
-| 🖼️ Pintura al Óleo | Arte clásico con texturas ricas |
-| 💧 Acuarela | Colores suaves y estilo soñador |
-| 🎮 3D Render | Octane render, Unreal Engine 5 |
-| 🌃 Cyberpunk | Neones, futurista, atmósfera oscura |
-| 🧙 Fantasía | Mágico, etéreo, épico |
-| ⚪ Minimalista | Diseño limpio y simple |
-| 👾 Pixel Art | 16-bit, estética retro |
-| ✏️ Boceto/Lápiz | Dibujo a mano artístico |
-
-## ⚡ Niveles de Calidad
-
-| Calidad | Modificadores |
-|---------|---------------|
-| 📺 Estándar | Sin modificadores |
-| 🖥️ HD | High definition, sharp details |
-| 🎥 2K | 2K resolution, crisp details |
-| 🎬 4K Ultra HD | Ultra high definition, extremely detailed |
-| 🌟 8K Master | Masterpiece, hyperrealistic, ultra sharp |
-
-## 🔧 Tecnologías
-
-- **Next.js 16** - Framework React
-- **TypeScript** - Tipado estático
-- **Tailwind CSS 4** - Estilos utility-first
-- **shadcn/ui** - Componentes UI
-- **Lucide React** - Iconos
-- **z-ai-web-dev-sdk** - Generación de imágenes con IA
+- La generación de imágenes puede tardar entre 5-30 segundos dependiendo de la complejidad
+- Pollinations.ai usa modelos de Stable Diffusion
+- El historial se guarda localmente en el navegador (localStorage)
 
 ## 📄 Licencia
 
-MIT - Libre para uso personal y comercial.
-
----
-
-Hecho con ❤️ para la comunidad
+MIT - Uso libre para cualquier propósito.

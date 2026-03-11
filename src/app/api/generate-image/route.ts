@@ -1,4 +1,3 @@
-import ZAI from 'z-ai-web-dev-sdk';
 import { NextResponse } from 'next/server';
 
 // Set max duration for serverless functions (Vercel)
@@ -16,6 +15,7 @@ const VALID_SIZES = [
 
 type ImageSize = typeof VALID_SIZES[number];
 
+// Using Pollinations.ai - FREE, no API key needed, unlimited
 export async function POST(request: Request) {
   try {
     // Parse request body
@@ -44,31 +44,46 @@ export async function POST(request: Request) {
       ? (size as ImageSize) 
       : '1024x1024';
 
-    console.log('[API] Starting image generation...');
+    const [width, height] = imageSize.split('x').map(Number);
 
-    // Initialize SDK
-    const zai = await ZAI.create();
-    console.log('[API] SDK initialized');
+    console.log('[API] Starting image generation with Pollinations.ai...');
+    console.log('[API] Prompt:', prompt.trim());
+    console.log('[API] Size:', width, 'x', height);
+
+    // Build the Pollinations.ai URL
+    // This service is completely FREE, no API key needed
+    const encodedPrompt = encodeURIComponent(prompt.trim());
+    const seed = Math.floor(Math.random() * 1000000);
     
-    // Generate image
-    const response = await zai.images.generations.create({
-      prompt: prompt.trim(),
-      size: imageSize
+    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&nologo=true&enhance=true`;
+
+    console.log('[API] Fetching image from:', imageUrl);
+
+    // Fetch the image
+    const response = await fetch(imageUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'image/*',
+      },
     });
-    console.log('[API] Image generation complete');
 
-    const imageBase64 = response.data[0]?.base64;
-
-    if (!imageBase64) {
+    if (!response.ok) {
+      console.error('[API] Failed to fetch image:', response.status, response.statusText);
       return NextResponse.json(
-        { error: 'No se pudo generar la imagen' },
+        { error: `Error al generar la imagen: ${response.status}` },
         { status: 500 }
       );
     }
 
+    // Convert to base64
+    const arrayBuffer = await response.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString('base64');
+
+    console.log('[API] Image generated successfully, size:', base64.length, 'bytes');
+
     return NextResponse.json({
       success: true,
-      image: imageBase64,
+      image: base64,
       prompt: prompt.trim(),
       size: imageSize
     });
